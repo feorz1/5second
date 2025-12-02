@@ -2,12 +2,20 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Угадай мелодию за 5 секунд</title>
+  <title>Угадай мелодию</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="app">
+    <h1 class="main-title">Угадай мелодию</h1>
+    
     <div class="player-card">
       <!-- Стартовый экран -->
       <div id="start-screen" class="start-screen">
@@ -22,7 +30,7 @@
 
         <div class="wave-wrapper">
           <div id="waveform"></div>
-          <div id="timer" class="timer">0:05</div>
+          <div id="timer" class="timer">0:00</div>
         </div>
 
         <div id="status" class="status-text"></div>
