@@ -8,9 +8,10 @@
   --bg: #050509;
   --card-bg: #11131a;
   --accent: #1db954;
+  --accent-soft: rgba(29, 185, 84, 0.16);
   --text: #f5f5f5;
-  --muted: #858b98;
-  --radius-lg: 24px;
+  --muted: #6f7687;
+  --radius-lg: 32px;
   --radius-pill: 999px;
 }
 
@@ -20,7 +21,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at top, #1b2233 0, #050509 55%);
+  background: radial-gradient(circle at top, #1c2435 0, #050509 58%);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
     "Segoe UI", sans-serif;
   color: var(--text);
@@ -28,41 +29,124 @@ body {
 
 #app {
   width: 100%;
-  max-width: 640px;
+  max-width: 760px;
   padding: 16px;
 }
 
 .player-card {
-  background: linear-gradient(145deg, #101320, #090b11);
+  background: radial-gradient(circle at top left, #171c29 0, #080a10 65%);
   border-radius: var(--radius-lg);
-  padding: 32px 24px 24px;
+  padding: 28px 32px 26px;
   box-shadow:
-    0 18px 40px rgba(0, 0, 0, 0.7),
-    0 0 0 1px rgba(255, 255, 255, 0.02);
+    0 26px 60px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(255, 255, 255, 0.03);
 }
 
-/* Стартовый экран */
-.start-screen {
+/* Волна + таймер */
+
+.wave-wrapper {
+  background: radial-gradient(circle at top left, #20263a 0, #0b0e18 58%);
+  border-radius: 24px;
+  padding: 18px 18px 16px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 16px 40px rgba(0, 0, 0, 0.7);
+}
+
+#waveform {
+  width: 100%;
+  height: 96px;
+}
+
+.timer {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+}
+
+/* Надпись "Время вышло!" */
+
+.status-text {
+  margin-top: 18px;
+  text-align: center;
+  min-height: 24px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* Кнопки управления */
+
+.controls-row {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.control-btn {
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  background: var(--accent);
+  color: #020305;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow:
+    0 10px 26px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(0, 0, 0, 0.45);
+  transition:
+    transform 0.1s ease-out,
+    box-shadow 0.1s ease-out,
+    filter 0.1s ease-out;
+}
+
+.control-btn-wide {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 999px;
+}
+
+.control-btn-round {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  font-size: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 300px;
 }
 
-.start-screen.hidden,
-.game-screen.hidden {
-  display: none;
+.control-btn:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 16px 32px rgba(0, 0, 0, 0.95),
+    0 0 0 1px rgba(0, 0, 0, 0.6);
+  filter: brightness(1.04);
 }
 
-/* Название трека сверху */
+.control-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(0, 0, 0, 0.7);
+}
+
+/* Название трека */
+
 .track-title {
+  margin-top: 18px;
   text-align: center;
-  font-size: 32px;
+  font-size: 22px;
   font-weight: 500;
   color: var(--text);
-  margin-bottom: 24px;
-  min-height: 42px;
-  transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
+  transition: opacity 0.18s ease-out, visibility 0.18s ease-out;
 }
 
 .track-title.hidden {
@@ -70,95 +154,25 @@ body {
   visibility: hidden;
 }
 
-/* Блок волны + таймер */
-.wave-wrapper {
-  background: radial-gradient(circle at top left, #202538 0, #0b0e16 60%);
-  border-radius: 18px;
-  padding: 16px 12px 14px;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-  margin-bottom: 20px;
-}
-
-#waveform {
-  width: 100%;
-  height: 88px;
-}
-
-.timer {
-  text-align: center;
-  margin-top: 12px;
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--accent);
-  letter-spacing: 0.08em;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-}
-
-/* Нижняя строка: кнопка */
-.bottom-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Кнопка */
-.primary-btn {
-  border: none;
-  cursor: pointer;
-  font: inherit;
-  padding: 12px 24px;
-  border-radius: var(--radius-pill);
-  background: linear-gradient(135deg, var(--accent), #46e283);
-  color: #020305;
-  font-weight: 600;
-  font-size: 15px;
-  letter-spacing: 0.02em;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow:
-    0 10px 24px rgba(0, 0, 0, 0.8),
-    0 0 0 1px rgba(0, 0, 0, 0.3);
-  transition:
-    transform 0.1s ease-out,
-    box-shadow 0.1s ease-out,
-    filter 0.1s ease-out;
-  white-space: nowrap;
-}
-
-.primary-btn--large {
-  padding: 16px 32px;
-  font-size: 18px;
-}
-
-.primary-btn:hover {
-  transform: translateY(-1px);
-  box-shadow:
-    0 14px 32px rgba(0, 0, 0, 0.9),
-    0 0 0 1px rgba(0, 0, 0, 0.4);
-  filter: brightness(1.05);
-}
-
-.primary-btn:active {
-  transform: translateY(1px) scale(0.99);
-  box-shadow:
-    0 6px 16px rgba(0, 0, 0, 0.9),
-    0 0 0 1px rgba(0, 0, 0, 0.5);
-}
-
 /* Адаптив */
-@media (max-width: 520px) {
+
+@media (max-width: 640px) {
   .player-card {
-    padding: 24px 20px 20px;
+    padding: 22px 16px 20px;
   }
 
-  .track-title {
-    font-size: 24px;
-    margin-bottom: 20px;
+  .controls-row {
+    flex-direction: column;
   }
 
-  .primary-btn {
+  .control-btn-wide,
+  .control-btn-round {
     width: 100%;
-    justify-content: center;
+    border-radius: 999px;
+  }
+
+  .control-btn-round {
+    height: 52px;
+    font-size: 22px;
   }
 }
