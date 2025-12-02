@@ -56,7 +56,7 @@ body {
   background-size: 400% 400%;
   animation: gradientShift 15s ease infinite;
   
-  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'YS-Text-Wide-Bold', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--text);
 }
 
