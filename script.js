@@ -1,4 +1,3 @@
-// Укажи свои реальные файлы и названия треков
 const tracks = [
   { src: "tracks/track1.mp3", title: "Трек 1" },
   { src: "tracks/track2.mp3", title: "Трек 2" },
@@ -8,6 +7,7 @@ const tracks = [
 const SHOW_SECONDS = 5;
 
 let currentIndex = 0;
+let gameStarted = false;
 let timerInterval = null;
 let autoPauseTimeout = null;
 
@@ -15,18 +15,22 @@ const timerEl = document.getElementById("timer");
 const statusEl = document.getElementById("status");
 const titleEl = document.getElementById("track-title");
 
+const startBtn = document.getElementById("start-btn");
+const startScreen = document.getElementById("start-screen");
+const gameScreen = document.getElementById("game-screen");
+
 const btnShowTitle = document.getElementById("btn-show-title");
 const btnReplay = document.getElementById("btn-replay");
 const btnNext = document.getElementById("btn-next");
 
 const wavesurfer = WaveSurfer.create({
   container: "#waveform",
-  waveColor: "#2a3444",
+  waveColor: "#21272e",
   progressColor: "#1db954",
   barWidth: 2,
   barGap: 1,
   responsive: true,
-  height: 80,
+  height: 88,
   cursorWidth: 0,
   hideScrollbar: true,
   normalize: true,
@@ -90,8 +94,10 @@ function loadTrack(index) {
 }
 
 wavesurfer.on("ready", () => {
-  wavesurfer.play();
-  startFiveSecondTimer();
+  if (gameStarted) {
+    wavesurfer.play();
+    startFiveSecondTimer();
+  }
 });
 
 function nextTrack() {
@@ -99,6 +105,14 @@ function nextTrack() {
   currentIndex = (currentIndex + 1) % tracks.length;
   loadTrack(currentIndex);
 }
+
+// Кнопка старта
+startBtn.addEventListener("click", () => {
+  gameStarted = true;
+  startScreen.classList.add("hidden");
+  gameScreen.classList.remove("hidden");
+  loadTrack(currentIndex);
+});
 
 btnShowTitle.addEventListener("click", () => {
   titleEl.classList.remove("hidden");
@@ -114,6 +128,3 @@ btnReplay.addEventListener("click", () => {
 btnNext.addEventListener("click", () => {
   nextTrack();
 });
-
-// стартовый трек
-loadTrack(currentIndex);
