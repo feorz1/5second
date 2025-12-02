@@ -4,12 +4,9 @@ const tracks = [
   { src: "tracks/track3.mp3", title: "Трек 3" },
 ];
 
-const SHOW_SECONDS = 5;
-
 let currentIndex = 0;
 let gameStarted = false;
 let timerInterval = null;
-let autoPauseTimeout = null;
 
 const timerEl = document.getElementById("timer");
 const statusEl = document.getElementById("status");
@@ -25,7 +22,7 @@ const btnNext = document.getElementById("btn-next");
 
 const wavesurfer = WaveSurfer.create({
   container: "#waveform",
-  waveColor: "#21272e",
+  waveColor: "#2a3444",
   progressColor: "#1db954",
   barWidth: 2,
   barGap: 1,
@@ -36,59 +33,46 @@ const wavesurfer = WaveSurfer.create({
   normalize: true,
 });
 
-function clearTimers() {
+function clearTimer() {
   if (timerInterval) {
     clearInterval(timerInterval);
     timerInterval = null;
   }
-  if (autoPauseTimeout) {
-    clearTimeout(autoPauseTimeout);
-    autoPauseTimeout = null;
-  }
 }
 
-function updateTimerDisplay(secondsLeft) {
-  if (secondsLeft < 0) secondsLeft = 0;
-  timerEl.textContent = `0:${secondsLeft.toString().padStart(2, "0")}`;
+function formatTime(sec) {
+  if (Number.isNaN(sec) || !Number.isFinite(sec)) return "0:00";
+  const total = Math.max(0, Math.floor(sec));
+  const m = Math.floor(total / 60);
+  const s = total % 60;
+  return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
-function startFiveSecondTimer() {
-  clearTimers();
+function startTimer() {
+  clearTimer();
   statusEl.textContent = "";
-  let secondsLeft = SHOW_SECONDS;
-  updateTimerDisplay(secondsLeft);
 
   timerInterval = setInterval(() => {
-    secondsLeft -= 1;
-    if (secondsLeft >= 0) {
-      updateTimerDisplay(secondsLeft);
-    }
-    if (secondsLeft <= 0) {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      statusEl.textContent = "Время вышло!";
-    }
-  }, 1000);
+    const current = wavesurfer.getCurrentTime();
+    timerEl.textContent = formatTime(current);
+  }, 200);
+}
 
-  autoPauseTimeout = setTimeout(() => {
-    if (wavesurfer.isPlaying()) {
-      wavesurfer.pause();
-    }
-    statusEl.textContent = "Время вышло!";
-  }, SHOW_SECONDS * 1000);
+function resetTimerDisplay() {
+  timerEl.textContent = "0:00";
 }
 
 function loadTrack(index) {
   const track = tracks[index];
   if (!track) return;
 
-  clearTimers();
+  clearTimer();
   wavesurfer.empty();
 
   titleEl.classList.add("hidden");
   titleEl.textContent = track.title;
   statusEl.textContent = "";
-  updateTimerDisplay(SHOW_SECONDS);
+  resetTimerDisplay();
 
   wavesurfer.load(track.src);
 }
@@ -96,17 +80,21 @@ function loadTrack(index) {
 wavesurfer.on("ready", () => {
   if (gameStarted) {
     wavesurfer.play();
-    startFiveSecondTimer();
+    startTimer();
   }
 });
 
+wavesurfer.on("finish", () => {
+  clearTimer();
+  timerEl.textContent = formatTime(wavesurfer.getDuration());
+});
+
 function nextTrack() {
-  clearTimers();
+  clearTimer();
   currentIndex = (currentIndex + 1) % tracks.length;
   loadTrack(currentIndex);
 }
 
-// Кнопка старта
 startBtn.addEventListener("click", () => {
   gameStarted = true;
   startScreen.classList.add("hidden");
@@ -121,8 +109,9 @@ btnShowTitle.addEventListener("click", () => {
 btnReplay.addEventListener("click", () => {
   if (!tracks[currentIndex]) return;
   wavesurfer.stop();
+  resetTimerDisplay();
   wavesurfer.play();
-  startFiveSecondTimer();
+  startTimer();
 });
 
 btnNext.addEventListener("click", () => {
