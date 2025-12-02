@@ -14,6 +14,14 @@
   --radius-pill: 999px;
 }
 
+@font-face {
+  font-family: 'YS-Text-Wide-Bold';
+  src: url('fonts/YS Text Wide-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: bold;
+}
+
+
 /* Анимированный градиентный фон */
 
 @keyframes gradientShift {
