@@ -41,6 +41,19 @@ body {
     0 0 0 1px rgba(255, 255, 255, 0.02);
 }
 
+/* Стартовый экран */
+.start-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.start-screen.hidden,
+.game-screen.hidden {
+  display: none;
+}
+
 /* Название трека сверху */
 .track-title {
   text-align: center;
@@ -111,6 +124,11 @@ body {
     box-shadow 0.1s ease-out,
     filter 0.1s ease-out;
   white-space: nowrap;
+}
+
+.primary-btn--large {
+  padding: 16px 32px;
+  font-size: 18px;
 }
 
 .primary-btn:hover {
