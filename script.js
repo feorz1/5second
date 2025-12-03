@@ -2,6 +2,15 @@ const tracks = [
   { src: "tracks/track1.mp3", title: "Трек 1" },
   { src: "tracks/track2.mp3", title: "Трек 2" },
   { src: "tracks/track3.mp3", title: "Трек 3" },
+  { src: "tracks/track3.mp3", title: "Трек 4" },
+  { src: "tracks/track3.mp3", title: "Трек 5" },
+  { src: "tracks/track3.mp3", title: "Трек 6" },
+  { src: "tracks/track3.mp3", title: "Трек 7" },
+  { src: "tracks/track3.mp3", title: "Трек 8" },
+  { src: "tracks/track3.mp3", title: "Трек 9" },
+  { src: "tracks/track3.mp3", title: "Трек 10" },
+  { src: "tracks/track3.mp3", title: "Трек 11" },
+  { src: "tracks/track3.mp3", title: "Трек 12" },
 ];
 
 let currentIndex = 0;
