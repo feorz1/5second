@@ -99,18 +99,13 @@ function loadTrack(index) {
   if (!track) return;
 
   clearTimer();
-  
-  // Скрываем название И очищаем текст сразу
+
+  // Скрываем название и очищаем текст сразу
   titleEl.classList.add("hidden");
-  titleEl.textContent = ""; // Пустой текст сразу!
-  
+  titleEl.textContent = "";
+
   statusEl.textContent = "";
   resetTimerDisplay();
-
-  // Обновляем текст через задержку
-  setTimeout(() => {
-    titleEl.textContent = track.title;
-  }, 100);
 
   // Если это видео-трек
   if (track.isVideo) {
@@ -179,6 +174,11 @@ startBtn.addEventListener("click", () => {
 });
 
 btnShowTitle.addEventListener("click", () => {
+  const track = tracks[currentIndex];
+  if (!track) return;
+
+  // Подставляем название только в момент нажатия кнопки
+  titleEl.textContent = track.title;
   titleEl.classList.remove("hidden");
 });
 
