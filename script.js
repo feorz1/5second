@@ -12,7 +12,7 @@ const tracks = [
   { src: "tracks/track11.mp3", title: "Жиган-лимон Михаил Круг" },
   { src: "tracks/track12.mp3", title: "My Favourite Game The Cardigans" },
   { src: "tracks/track13.mp3", title: "Money, Money, Money ABBA" },
-  { src: "tracks/track14.mp3", title: "BFG Division Mick Gordon", isVideo: true, videoSrc: "tracks/track14.mp4" },
+  { src: "tracks/track14.mp3", title: "BFG Division Mick Gordon", isVideo: true, videoSrc: "tracks/track14.MP4" },
 ];
 
 let currentIndex = 0;
