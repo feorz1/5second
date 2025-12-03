@@ -100,8 +100,14 @@ function loadTrack(index) {
 
   clearTimer();
   
+  // СНАЧАЛА скрываем название, ПОТОМ обновляем текст
   titleEl.classList.add("hidden");
-  titleEl.textContent = track.title;
+  
+  // Небольшая задержка перед обновлением текста
+  setTimeout(() => {
+    titleEl.textContent = track.title;
+  }, 50);
+  
   statusEl.textContent = "";
   resetTimerDisplay();
 
